@@ -1,49 +1,55 @@
-int getBallPoints(int times, GLfloat radius) {
+GLuint get_sphere_vertices(GLint size, GLfloat radius,
+        GLuint point_len, GLfloat *vertex) {
     int j;
     int index = 0;
-    int nextIndex = 0;
-    for (j = 0; j < times; j += 1) {
-        index = kPointLen * 2 * j * (times + 1);
-        nextIndex = kPointLen * 2 * (j + 1) * (times + 1);
-        GLfloat smallAngle;
+    int next_index = 0;
+    for (j = 0; j < size; j += 1) {
+        index = point_len * 2 * j * (size + 1);
+        next_index = point_len * 2 * (j + 1) * (size + 1);
+        GLfloat small_angle;
 
-        GLfloat angle = (GLfloat) (M_PI * (j * 1.0) / times);
-        GLfloat angle2 = (GLfloat) (M_PI * (j + 1) * 1.0 / times);
+        GLfloat angle = (GLfloat) (M_PI * (j * 1.0) / size);
+        GLfloat angle2 = (GLfloat) (M_PI * (j + 1) * 1.0 / size);
 
 
-        GLfloat smallRadius = (GLfloat) (radius * sin(angle));
-        GLfloat smallRadius2 = (GLfloat) (radius * sin(angle2));
+        GLfloat small_radius = (GLfloat) (radius * sin(angle));
+        GLfloat small_radius2 = (GLfloat) (radius * sin(angle2));
 
         int i;
-        for (i = index; i < nextIndex; i += kPointLen) {
-            // e.g. mIndex / 100 * 2 * len
-            // and mIndex [0~100]
-            // smallAngle [0~2PI]
-            int mIndex = i - index;
+        for (i = index; i < next_index; i += point_len) {
+            // e.g. inner_index / 100 * 2 * len
+            // and inner_index [0~100]
+            // small_angle [0~2PI]
+            int inner_index = i - index;
 
-            smallAngle = (GLfloat) (M_PI * (mIndex * 2.0) / (kPointLen * 2 * times));
+            small_angle = (GLfloat) (M_PI * (inner_index * 2.0) / (point_len * 2 * size));
 
             // XYZ
-            gVertexAttr[i] = (GLfloat) (smallRadius * cos(smallAngle));
-            gVertexAttr[i + kPointLen] = (GLfloat) (smallRadius2 * cos(smallAngle));
+            vertex[i] = (GLfloat) (small_radius * cos(small_angle));
+            vertex[i + point_len] = (GLfloat) (small_radius2 * cos(small_angle));
             ++i;
-            gVertexAttr[i] = (GLfloat) (radius * cos(angle));
-            gVertexAttr[i + kPointLen] = (GLfloat) (radius * cos(angle2));
+            vertex[i] = (GLfloat) (radius * cos(angle));
+            vertex[i + point_len] = (GLfloat) (radius * cos(angle2));
             ++i;
-            gVertexAttr[i] = (GLfloat) (smallRadius * sin(smallAngle));
-            gVertexAttr[i + kPointLen] = (GLfloat) (smallRadius2 * sin(smallAngle));
+            vertex[i] = (GLfloat) (small_radius * sin(small_angle));
+            vertex[i + point_len] = (GLfloat) (small_radius2 * sin(small_angle));
             ++i;
 
             // texture coordinate
-            gVertexAttr[i] = (GLfloat) ((mIndex * 1.0) / (kPointLen * 2 * times));
-            gVertexAttr[i + kPointLen] = (GLfloat) ((mIndex * 1.0) / (kPointLen * 2 * times));
+            vertex[i] = (GLfloat) ((inner_index * 1.0) / (point_len * 2 * size));
+            vertex[i + point_len] = (GLfloat) ((inner_index * 1.0) / (point_len * 2 * size));
             ++i;
-            gVertexAttr[i] = (GLfloat) (1.0f - (j * 1.0) / times);
-            gVertexAttr[i + kPointLen] = (GLfloat) (1.0f - ((j + 1) * 1.0) / times);
+
+            // Here if the pic is upside down reverse
+            // Change Y axis value
+            // vertex[i] = (GLfloat) (1.0f - (j * 1.0) / size);
+            // vertex[i + point_len] = (GLfloat) (1.0f - ((j + 1) * 1.0) / size);
+            vertex[i] = (GLfloat) (1.0f * (j * 1.0) / size);
+            vertex[i + point_len] = (GLfloat) (1.0f * ((j + 1) * 1.0) / size);
             ++i;
         } // for X axis
 
     } // for Y axis
 
-    return nextIndex / kPointLen;
+    return next_index / point_len;
 }
