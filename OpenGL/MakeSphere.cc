@@ -28,10 +28,10 @@ void CalculateVertex(vector<float> &vertex,
 
     FILE *v_fd;
     FILE *tex_fd;
-    v_fd = fopen("vertex", "a+");
+    v_fd = fopen("vertex.c", "a+");
     // fprintf(v_fd, "float kSphereVertexs[] = {\n");
     
-    tex_fd = fopen("texcoord", "a+");
+    tex_fd = fopen("texcoord.c", "a+");
     // fprintf(tex_fd, "float kSphereTexcoord[] = {\n");
     
     if (v_fd != NULL) {
@@ -53,7 +53,7 @@ void CalculateVertex(vector<float> &vertex,
 int main() {
     vector<float> vertexs;
     vector<float> tex_coord;
-    int precision = 50;
+    int precision = 40;
     float r = 0.5;
 
     int vertex_f;
