@@ -53,8 +53,8 @@ void CalculateVertex(vector<float> &vertex,
 int main() {
     vector<float> vertexs;
     vector<float> tex_coord;
-    int precision = 40;
-    float r = 0.5;
+    int precision = 50;
+    float r = 1.0f;
 
     int vertex_f;
 
