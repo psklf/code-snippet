@@ -1,3 +1,4 @@
+#import "videoEncode.h"
 
 - (void) videoWriteTest {
     NSString* newstr = [NSString stringWithFormat:@"yangpian001.jpg"];
