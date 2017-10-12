@@ -16,11 +16,11 @@ void CalculateVertex(vector<float> &vertex,
         int precision, float radius) {
     float a = latNumber * M_PI / precision;
     float b = 2 * longNumber * M_PI / precision;
-    float x = sin(a) * sin(b) * radius;
-    float y = cos(a) * radius;
-    float z = sin(a) * cos(b) * radius;
-    float v = 1 - 1.0f * longNumber / precision;
-    float u = 1 - 1.0f * latNumber / precision;
+    float x = cos(a - M_PI / 2.0f) * cos(b) * radius;
+    float y = sin(a - M_PI / 2.0f) * radius;
+    float z = cos(a - M_PI / 2.0f) * sin(b) * radius;
+    float v = 1.0f * longNumber / precision;
+    float u = 1.0f * latNumber / precision;
 
     vertex.push_back(x);
     vertex.push_back(y);
